@@ -4,64 +4,71 @@
 
 This repository contains R scripts used to investigate pain-associated miRNA expression patterns across different monocyte subsets.
 
-The analysis compares High Pain and Low Pain groups within three
-monocyte subsets:
+The analysis compares High Pain and Low Pain groups within three monocyte subsets:
 
 - Classical monocytes (CLAS)
 - Intermediate monocytes (INT)
 - Non-classical monocytes (NONCLAS)
 
-The workflow includes principal component analysis (PCA),
-differential expression analysis, volcano plot visualisation,
-and overlap analysis of candidate miRNAs across monocyte subsets.
+The analysis workflow includes principal component analysis (PCA), differential expression (DE) analysis, volcano plot visualisation, and overlap analysis of candidate miRNAs across the three monocyte subsets.
 
 ## Analysis Workflow
 
-The analysis scripts should be run in the following order:
+The scripts are designed to be run from the project root directory in the following order:
 
-### 1. PCA
+### 1. Principal Component Analysis (PCA)
+
+Script:
 
 `scripts/01_PCA.R`
 
-Performs principal component analysis separately for CLAS, INT, and NONCLAS monocytes to examine overall miRNA expression patterns between pain groups.
+This script performs PCA separately for CLAS, INT, and NONCLAS monocytes to examine overall miRNA expression patterns across pain groups.
+
+The PCA plots are combined into a single figure for comparison across the three monocyte subsets.
 
 ### 2. Differential Expression Analysis
 
+Script:
+
 `scripts/02_DE_Volcano.R`
 
-Performs differential expression analysis using the `limma` package.
+This script performs differential expression analysis using the `limma` package.
 
-Comparison:
+The comparison is:
 
-High Pain vs Low Pain
+**High Pain vs Low Pain**
 
-Interpretation:
+Therefore:
 
-- Positive logFC: higher expression in the High Pain group
-- Negative logFC: higher expression in the Low Pain group
+- Positive logFC indicates relatively higher miRNA expression in the High Pain group.
+- Negative logFC indicates relatively higher miRNA expression in the Low Pain group.
 
-Candidate miRNAs were identified using the exploratory thresholds:
+Candidate miRNAs are identified using the following exploratory thresholds:
 
-- P < 0.05
+- Nominal P < 0.05
 - |logFC| > 0.5
 
-Volcano plots are generated for each monocyte subset.
+Volcano plots are generated separately for CLAS, INT, and NONCLAS monocytes.
 
 ### 3. Overlap Analysis
 
+Script:
+
 `scripts/03_Overlap.R`
 
-Compares candidate miRNAs identified in CLAS, INT, and NONCLAS monocytes.
+This script compares candidate miRNAs identified across the three monocyte subsets.
 
 The analysis identifies:
 
 - Cell-type-specific candidate miRNAs
-- miRNAs shared between two or more monocyte subsets
+- Candidate miRNAs shared between two or more monocyte subsets
 - Direction of expression changes across monocyte subsets
 
-A Venn diagram and shared-miRNA table are generated.
+A Venn diagram and a shared-miRNA table are generated to summarise the overlap.
 
 ## Repository Structure
+
+Only analysis scripts and documentation are included in the GitHub repository.
 
 ```text
 OA-Pain/
@@ -69,50 +76,86 @@ OA-Pain/
 │   ├── 01_PCA.R
 │   ├── 02_DE_Volcano.R
 │   └── 03_Overlap.R
-│
+├── README.md
+└── .gitignore
+```
+
+## Data and Results Availability
+
+The original miRNA expression data, sample metadata, and analysis outputs are not included in this repository due to data access restrictions.
+
+This repository therefore contains analysis code only.
+
+The scripts assume that the required input data are stored locally in a `data/` directory. Generated analysis outputs are saved locally in a `results/` directory.
+
+Both `data/` and `results/` are excluded from version control using `.gitignore`.
+
+## Expected Local Project Structure
+
+To run the scripts locally, the project is organised as follows:
+
+```text
+OA-Pain/
+├── data/
+│   ├── miRNA Data Sample Key.csv
+│   └── miRNA_normalized_counts.csv
+├── scripts/
+│   ├── 01_PCA.R
+│   ├── 02_DE_Volcano.R
+│   └── 03_Overlap.R
 ├── results/
 │   ├── PCA/
 │   ├── DE/
 │   └── Overlap/
-│
 ├── README.md
 └── .gitignore
+```
 
-## Data and Results Availability
+## Running the Analysis
 
-The original miRNA expression data, sample metadata, and analysis
-outputs are not included in this repository due to data access
-restrictions.
+All scripts should be run from the `OA-Pain` project root directory.
 
-This repository contains analysis scripts only. The scripts assume that the required input data are stored locally in a `data/` directory, while generated outputs are saved locally in a `results/` directory.
+The recommended order is:
 
-Both `data/` and `results/` are excluded from version control.
+```text
+01_PCA.R
+    ↓
+02_DE_Volcano.R
+    ↓
+03_Overlap.R
+```
 
-The scripts assume that the required input files are stored locally in a data/ directory.
+For example, the scripts can be run from the command line using:
 
-Expected local structure:
-data/
-├── miRNA Data Sample Key.csv
-└── miRNA_normalized_counts.csv
+```bash
+Rscript scripts/01_PCA.R
+Rscript scripts/02_DE_Volcano.R
+Rscript scripts/03_Overlap.R
+```
 
-The data/ directory is excluded from version control using .gitignore.
+The scripts use relative paths so that no user-specific absolute file paths are required.
 
-Software
+## Software and R Packages
 
 The analyses were performed in R.
 
-Main R packages used include:
+The main R packages used include:
 
-limma
-ggplot2
-dplyr
-ggrepel
-patchwork
-tidyr
-ggforce
-ragg
+- `limma`
+- `ggplot2`
+- `dplyr`
+- `ggrepel`
+- `patchwork`
+- `tidyr`
+- `ggforce`
+- `ragg`
 
-Notes
+## Statistical Note
 
-The differential expression analysis was exploratory. Candidate miRNAs were identified using nominal P values and effect-size thresholds and should not be interpreted as independently validated
-biomarkers.
+The differential expression analysis was exploratory.
+
+Candidate miRNAs were identified using nominal P values and effect-size thresholds (P < 0.05 and |logFC| > 0.5). These candidate signals should therefore not be interpreted as independently validated biomarkers.
+
+## Reproducibility
+
+The analysis scripts are provided to document the computational workflow used in this project. Because the underlying expression data and sample metadata are subject to data access restrictions, the complete analysis cannot be reproduced from this repository alone.
