@@ -331,6 +331,16 @@ make_pca <-
     # Samples are treated as observations.
     # miRNAs are treated as variables.
     #
+    # This section follows standard R PCA practice using prcomp().
+    # Reference:
+    # https://search.r-project.org/R/refmans/stats/html/prcomp.html
+    #
+    # The general PCA workflow and visualisation approach were informed by:
+    # https://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/
+    #
+    # Modifications were made for the present dataset by applying PCA
+    # separately to each monocyte subset.
+    #
     
     pca <-
       prcomp(
@@ -391,6 +401,14 @@ make_pca <-
     
 
     # Generate PCA plot
+    #
+    # This section uses ggplot2 to visualise the PCA scores and
+    # stat_ellipse() to add group-level ellipses.
+    # Reference:
+    # https://search.r-project.org/CRAN/refmans/ggplot2/html/stat_ellipse.html
+    #
+    # Modifications were made to colour samples by pain group and label
+    # axes using the percentage of variance explained in this dataset.
 
     
     p <-
@@ -482,6 +500,13 @@ p3 <-
 
 # 12. Combine the three PCA plots
 # The legends are collected into a single legend on the right.
+#
+# This section uses patchwork to combine multiple ggplot objects.
+# Reference:
+# https://patchwork.data-imaginist.com/reference/plot_layout.html
+#
+# Modifications were made to combine the three monocyte subset PCA plots
+# into one figure for this project.
 
 final <-
   (

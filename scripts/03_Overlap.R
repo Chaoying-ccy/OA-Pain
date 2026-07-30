@@ -205,6 +205,15 @@ cat(
 
 
 # 6. Calculate Venn diagram counts
+#
+# This section uses standard set operations in R, including setdiff(),
+# intersect(), union(), and Reduce(), to calculate overlap between
+# candidate miRNA sets.
+# Reference:
+# https://stat.ethz.ch/R-manual/R-devel/library/base/html/sets.html
+#
+# Modifications were made for the present dataset by calculating overlap
+# between the CLAS, INT, and NONCLAS monocyte subsets.
 
 venn_counts <-
   data.frame(
@@ -335,6 +344,14 @@ circle_data <-
 
 
 # 8. Generate Venn diagram
+#
+# This section uses ggplot2 and ggforce::geom_circle() to draw a
+# three-set Venn-style diagram.
+# Reference:
+# https://ggforce.data-imaginist.com/reference/geom_circle.html
+#
+# Modifications were made to place and label the three monocyte subset
+# circles and add the overlap counts calculated above.
 
 p_venn <-
   ggplot() +
@@ -444,6 +461,14 @@ p_venn <-
 #
 # miRNAs present in at least two cell types are retained.
 #
+# This section uses dplyr joins and data transformation functions to
+# combine candidate miRNA lists and compare logFC direction across
+# cell types.
+# Reference:
+# https://dplyr.tidyverse.org/reference/mutate-joins.html
+#
+# Modifications were made to retain miRNAs shared by two or more monocyte
+# subsets and classify whether their direction is consistent or opposite.
 
 shared_table <-
   full_join(
@@ -867,6 +892,14 @@ p_table <-
 
 
 # 16. Combine Venn diagram and table
+#
+# This section uses patchwork to combine the Venn diagram and shared-miRNA
+# table into one figure.
+# Reference:
+# https://patchwork.data-imaginist.com/reference/plot_layout.html
+#
+# Modifications were made to adjust the relative widths and annotation
+# style for the final project figure.
 
 final_plot <-
   (

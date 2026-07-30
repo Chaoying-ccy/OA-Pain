@@ -363,6 +363,15 @@ run_DE <-
     # --------------------------------------------------------
     # Create design matrix
     # --------------------------------------------------------
+    #
+    # This section follows the standard limma workflow for
+    # differential expression analysis using a design matrix,
+    # lmFit(), eBayes(), and topTable().
+    # Reference:
+    # https://bioconductor.org/packages/release/bioc/vignettes/limma/inst/doc/usersguide.pdf
+    #
+    # Modifications were made for the present dataset by comparing
+    # High Pain and Low Pain samples separately within each monocyte subset.
     
     design <-
       model.matrix(
@@ -539,6 +548,19 @@ draw_volcano <-
       head(10)
     
     # Generate volcano plot
+    #
+    # This section follows a standard volcano plot approach, plotting
+    # log fold change against -log10(P.Value) and highlighting candidate
+    # miRNAs using project-specific thresholds.
+    # Reference:
+    # https://ggplot2.tidyverse.org/reference/geom_point.html
+    #
+    # The miRNA labels are added using ggrepel to reduce label overlap.
+    # Reference:
+    # https://ggrepel.slowkow.com/reference/geom_text_repel.html
+    #
+    # Modifications were made to colour candidates by pain-group direction
+    # and label the top candidate miRNAs for each monocyte subset.
     
     p <-
       ggplot(
