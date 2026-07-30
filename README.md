@@ -141,15 +141,15 @@ The analyses were performed in R.
 
 The main R packages used include:
 
-- `limma`
-- `ggplot2`
-- `dplyr`
-- `ggrepel`
-- `patchwork`
-- `tidyr`
-- `ggforce`
-- `ragg`
-
+- `limma (version 3.66.0)`
+- `ggplot2 (version 4.0.3)`
+- `dplyr (version 1.2.1)`
+- `ggrepel (version 0.9.8)`
+- `patchwork (version 1.3.2)`
+- `tidyr (version 1.3.2)`
+- `ggforce (version 0.5.0)`
+- `ragg (version 1.5.2)`
+- `R version 4.5.1 (2025-06-13)`
 ## Statistical Note
 
 The differential expression analysis was exploratory.
